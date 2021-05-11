@@ -28,19 +28,21 @@ const ListView = () => {
       return;
     }
     dispatch(credentials);
-    setDataProvider(
-      dataProvider.cloneWithRows([...dataProvider.getAllData(), ...videos]),
-    );
   }, [dispatch]);
 
   useEffect(() => {
     getVideos();
   }, []);
 
-  const _renderItem = (type, data) => {
-    if (!data) {
-      return;
+  useEffect(() => {
+    if (videos) {
+      setDataProvider(
+        dataProvider.cloneWithRows([...dataProvider.getAllData(), ...videos]),
+      );
     }
+  }, [videos, pageToken]);
+
+  const _renderItem = (type, data) => {
     const {
       snippet: {title, description, thumbnails},
     } = data;
