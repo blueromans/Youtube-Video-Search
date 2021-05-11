@@ -16,14 +16,17 @@ const ListView = () => {
       return r1 !== r2;
     }),
   );
-  const getVideos = useCallback(() => {
-    const credentials = {
-      type: 'GET_VIDEOS',
-      coordinate: location,
-      pageToken: pageToken,
-    };
-    dispatch(credentials);
-  }, [dispatch]);
+  const getVideos = useCallback(
+    pageToken_ => {
+      const credentials = {
+        type: 'GET_VIDEOS',
+        coordinate: location,
+        pageToken: pageToken_,
+      };
+      dispatch(credentials);
+    },
+    [dispatch],
+  );
 
   useEffect(() => {
     if (videos) {
@@ -55,9 +58,14 @@ const ListView = () => {
       />
     );
   };
+  const onEndReached = () => {
+    getVideos(pageToken);
+    console.log('onEndReached', pageToken);
+  };
   return (
     <Section ph10>
       <BaseList
+        onEndReached={onEndReached}
         renderItem={_renderItem}
         dataProvider={dataProvider}
         height={100}
