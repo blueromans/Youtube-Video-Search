@@ -32,49 +32,55 @@ const VideoModal = ({isVisible, hideModal, videos, error = ''}) => {
           </TouchableOpacity>
         </Section>
         <Section full>
-          <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
-            {!!videos &&
-              videos.map((item, index) => {
-                const {
-                  snippet: {title, description, thumbnails},
-                } = item;
-                const {
-                  default: {url},
-                } = thumbnails;
-                const _handleVideoImage = () => (
-                  <FastImage
-                    style={{width: 120, height: 90}}
-                    resizeMode={FastImage.resizeMode.cover}
-                    source={{uri: url}}
-                  />
-                );
-                return (
-                  <ListItem
-                    style={styles.listItem}
-                    left={_handleVideoImage}
-                    key={index}
-                    title={title}
-                    description={description}
-                  />
-                );
-              })}
-          </ScrollView>
-          {!!error && (
+          {error ? (
             <Section center middle>
               <Text>Hata Oluştu. Hata Detayı</Text>
               <Text>{error.toString()}</Text>
             </Section>
+          ) : (
+            <React.Fragment>
+              <ScrollView
+                style={{flex: 1}}
+                showsVerticalScrollIndicator={false}>
+                {!!videos &&
+                  videos.map((item, index) => {
+                    const {
+                      snippet: {title, description, thumbnails},
+                    } = item;
+                    const {
+                      default: {url},
+                    } = thumbnails;
+                    const _handleVideoImage = () => (
+                      <FastImage
+                        style={{width: 120, height: 90}}
+                        resizeMode={FastImage.resizeMode.cover}
+                        source={{uri: url}}
+                      />
+                    );
+                    return (
+                      <ListItem
+                        style={styles.listItem}
+                        left={_handleVideoImage}
+                        key={index}
+                        title={title}
+                        description={description}
+                      />
+                    );
+                  })}
+              </ScrollView>
+              <Section flex={false}>
+                <TouchableOpacity
+                  onPressIn={navigateToListView}
+                  style={{alignItems: 'flex-end'}}
+                  onPress={hideModal}>
+                  <Text
+                    style={{padding: 10, fontWeight: 'bold', color: 'orange'}}>
+                    TÜMÜNÜ GÖRÜNTÜLE
+                  </Text>
+                </TouchableOpacity>
+              </Section>
+            </React.Fragment>
           )}
-        </Section>
-        <Section flex={false}>
-          <TouchableOpacity
-            onPressIn={navigateToListView}
-            style={{alignItems: 'flex-end'}}
-            onPress={hideModal}>
-            <Text style={{padding: 10, fontWeight: 'bold', color: 'orange'}}>
-              TÜMÜNÜ GÖRÜNTÜLE
-            </Text>
-          </TouchableOpacity>
         </Section>
       </Section>
     </Modal>
