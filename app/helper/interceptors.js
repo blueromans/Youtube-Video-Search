@@ -17,6 +17,12 @@ const API_KEYS = [
   'AIzaSyCR7Eo4rH_iwOFwSOJ8u8JCPycDw3FnkKY',
   'AIzaSyB1_JDfFHkgi_203fhMa1SEftbSqKvX50Y',
   'AIzaSyC5HceVRBzZM_zcKfRfCHiCOXN16_4xN30',
+  'AIzaSyBF21Er1yZDEosGc5ZXZhoSgahYW5wcoK8',
+  'AIzaSyBTqMc9m1D1SyZIi_R2hQKstPSdLS1h6Kk',
+  'AIzaSyBAq1J12mnAmJgSfu4P1GE1G5XQTIsSce8',
+  'AIzaSyDF_Jlk-NPao00Mv9lf8h6FzLpmT8ROMHk',
+  'AIzaSyBIXjORxCx8GmVLYfy_HHYhl-Qic3Kad_A',
+  'AIzaSyAFjXf3LKuKozA9iodnxwLpKA9vWSE8gqU',
 ];
 const updateQueryStringParameter = (uri, key, value) => {
   const re = new RegExp('([?&])' + key + '=.*?(&|$)', 'i');
