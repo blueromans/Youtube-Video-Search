@@ -1,38 +1,29 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch, useSelector, shallowEqual} from 'react-redux';
 import {DataProvider} from 'recyclerlistview';
 import FastImage from 'react-native-fast-image';
 import {Section, ListItem, BaseList} from '../components';
 
 const ListView = () => {
   const dispatch = useDispatch();
+  const state = useSelector(state => state, shallowEqual);
   const {
     videos: {videos, error, pageToken},
     location: {location},
-  } = useSelector(state => state);
+  } = state;
   const [dataProvider, setDataProvider] = useState(
     new DataProvider((r1, r2) => {
       return r1 !== r2;
-    }).cloneWithRows([]),
+    }),
   );
   const getVideos = useCallback(() => {
     const credentials = {
       type: 'GET_VIDEOS',
       coordinate: location,
-      maxResult: 10,
-      loading: true,
       pageToken: pageToken,
     };
-    console.log('Listview', pageToken);
-    if (!pageToken) {
-      return;
-    }
     dispatch(credentials);
   }, [dispatch]);
-
-  useEffect(() => {
-    getVideos();
-  }, []);
 
   useEffect(() => {
     if (videos) {
@@ -40,7 +31,7 @@ const ListView = () => {
         dataProvider.cloneWithRows([...dataProvider.getAllData(), ...videos]),
       );
     }
-  }, [videos, pageToken]);
+  }, [videos]);
 
   const _renderItem = (type, data) => {
     const {
@@ -64,17 +55,9 @@ const ListView = () => {
       />
     );
   };
-  const onEndReached = () => {
-    if (!pageToken) {
-      return;
-    }
-    getVideos();
-    console.log('onEndReached', pageToken);
-  };
   return (
     <Section ph10>
       <BaseList
-        onEndReached={onEndReached}
         renderItem={_renderItem}
         dataProvider={dataProvider}
         height={100}
@@ -82,4 +65,4 @@ const ListView = () => {
     </Section>
   );
 };
-export default ListView;
+export default React.memo(ListView);

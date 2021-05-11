@@ -4,7 +4,6 @@ const initState = {
   videos: [],
   pageToken: null,
   loading: false,
-  ready: false,
 };
 
 export default function videos(state = initState, action) {
@@ -15,10 +14,10 @@ export default function videos(state = initState, action) {
       };
     case types.SUCCESS:
       const {videos, pageToken} = action.payload;
+      console.log('Success', pageToken);
       return {
         ...state,
         loading: false,
-        ready: true,
         videos,
         pageToken: pageToken,
       };
@@ -27,7 +26,6 @@ export default function videos(state = initState, action) {
       return {
         ...state,
         loading: false,
-        ready: true,
         error,
       };
     default:

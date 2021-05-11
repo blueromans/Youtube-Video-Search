@@ -40,9 +40,6 @@ const MapView = () => {
     dispatch({
       type: 'GET_VIDEOS',
       coordinate: mapRegion,
-      maxResult: 10,
-      loading: true,
-      pageToken: null,
     });
     setIsVisible(true);
   };

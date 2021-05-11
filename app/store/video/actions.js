@@ -19,8 +19,8 @@ export function* getVideos(state) {
   const {
     coordinate: {latitude, longitude},
     pageToken,
-    maxResult,
   } = state;
+  console.log(state);
   const credentials = {
     part: 'snippet',
     channelType: 'any',
@@ -29,9 +29,9 @@ export function* getVideos(state) {
     g: 'surfing',
     order: 'date',
     type: 'video',
-    maxResults: maxResult,
+    maxResults: 10,
   };
-  if (pageToken !== null) {
+  if (pageToken) {
     credentials.pageToken = pageToken;
   }
   const queryString = Object.keys(credentials)
@@ -39,7 +39,7 @@ export function* getVideos(state) {
     .join('&');
   try {
     const {items, nextPageToken} = yield call(get, 'search', queryString);
-    console.log('Action', nextPageToken)
+    console.log('Action', nextPageToken);
     yield put(actionGetVideosSuccess(items, nextPageToken));
   } catch (error) {
     yield put(actionGetVideosError(error));
